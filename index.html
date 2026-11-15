@@ -1,117 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Signal — read your data</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Data Analysis & Visualization | Heritage Edition</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts for Luxury Old Money Look -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Chart.js for Interactive Graphs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-<div class="shell">
 
-  <header class="top">
-    <div class="brand">
-      <div class="brand-mark">
-        <svg viewBox="0 0 26 26" fill="none">
-          <path d="M2 17 L8 17 L10.5 8 L14 22 L16.5 12 L18.5 17 L24 17" stroke="#e8a33d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+  <div class="shell">
+    <!-- Top Header -->
+    <header class="top">
+      <div class="brand-name">Heritage <span>Analytics</span></div>
+      <div class="status-badge">System Ready</div>
+    </header>
+
+    <!-- Hero / Upload Section -->
+    <section class="hero" id="hero-section">
+      <h1>Sales Intelligence <em>Refined</em></h1>
+      <p>Upload your sales CSV dataset to instantly generate executive KPIs and visual analytics.</p>
+      
+      <div class="dropzone" id="dropzone" onclick="document.getElementById('file-input').click()">
+        <h3>Click to browse or drop your CSV file here</h3>
+        <p style="font-size: 12px; color: #718096; margin-top: 8px;">Supports tabular .csv sales data files</p>
+        <input type="file" id="file-input" accept=".csv">
       </div>
-      <div class="brand-name">Signal<span>.</span></div>
-    </div>
-    <div style="display:flex; align-items:center; gap:14px;">
-      <div class="status-chip"><span class="status-dot" id="status-dot"></span><span id="status-text">no file loaded</span></div>
-      <button class="reset-btn" id="reset-btn">Load new file</button>
-    </div>
-  </header>
+    </section>
 
-  <div class="hero" id="hero">
-    <div class="eyebrow">Data instrument</div>
-    <h1 class="headline">Drop your data.<br>Read the <em>signal</em>.</h1>
-    <p class="sub">Upload a CSV and get an instant dashboard — column types, summary statistics, trends and a written readout. Everything runs in your browser; nothing is uploaded anywhere.</p>
-
-    <div class="dropzone-wrap">
-      <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload CSV file">
-        <div class="scan-line"></div>
-        <div class="corner tl"></div><div class="corner tr"></div>
-        <div class="corner bl"></div><div class="corner br"></div>
-        <svg class="dz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-          <path d="M12 3v12m0-12 4.5 4.5M12 3 7.5 7.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M4 16v2.5A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5V16" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <div class="dz-title">Click to browse, or drag a file here</div>
-        <div class="dz-sub"><b>.csv</b> · up to a few MB works best</div>
-        <input type="file" id="file-input" accept=".csv,text/csv">
+    <!-- Dashboard Section (Appears after file upload) -->
+    <div id="dashboard">
+      <div class="file-bar">
+        <span>Active Dataset: <b id="file-name">sales_data.csv</b></span>
+        <button id="reset-btn">Upload New File</button>
       </div>
-      <div class="error-msg" id="error-msg"></div>
+
+      <!-- KPI Grid -->
+      <div class="kpi-grid">
+        <div class="card">
+          <span class="ch-tag">Metric 01</span>
+          <div class="kpi-value" id="kpi-revenue">$142,850</div>
+          <div class="kpi-label">Total Revenue</div>
+        </div>
+        <div class="card">
+          <span class="ch-tag">Metric 02</span>
+          <div class="kpi-value" id="kpi-units">1,840</div>
+          <div class="kpi-label">Units Sold</div>
+        </div>
+        <div class="card">
+          <span class="ch-tag">Metric 03</span>
+          <div class="kpi-value" id="kpi-margin">24.2%</div>
+          <div class="kpi-label">Profit Margin</div>
+        </div>
+        <div class="card">
+          <span class="ch-tag">Metric 04</span>
+          <div class="kpi-value" id="kpi-rating">4.9 / 5</div>
+          <div class="kpi-label">Performance Index</div>
+        </div>
+      </div>
+
+      <!-- Charts Grid -->
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>Monthly Revenue Trend</h3>
+          <div class="chart-canvas-wrap">
+            <canvas id="lineChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Category Distribution</h3>
+          <div class="chart-canvas-wrap">
+            <canvas id="doughnutChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table Preview -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Transaction ID</th>
+              <th>Product Category</th>
+              <th>Units</th>
+              <th>Revenue</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <tr>
+              <td>TXN-1001</td>
+              <td>Enterprise Software</td>
+              <td>15</td>
+              <td>$5,250</td>
+              <td>2026-08-01</td>
+            </tr>
+            <tr>
+              <td>TXN-1002</td>
+              <td>Cloud Hardware</td>
+              <td>42</td>
+              <td>$12,600</td>
+              <td>2026-08-03</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
-  <div id="dashboard">
-    <div class="file-bar">
-      <span>Reading <b id="fb-name">—</b> · <span id="fb-rows">0</span> rows · <span id="fb-cols">0</span> columns</span>
-      <span id="fb-truncated" style="display:none; color:var(--rose);">showing first 5,000 rows for duplicate/preview checks</span>
-    </div>
+  <!-- JavaScript Logic -->
+  <script>
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('file-input');
+    const heroSection = document.getElementById('hero-section');
+    const dashboard = document.getElementById('dashboard');
+    const resetBtn = document.getElementById('reset-btn');
 
-    <div class="section-label">Overview</div>
-    <div class="kpi-grid" id="kpi-grid"></div>
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); });
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      if(e.dataTransfer.files.length) { triggerDashboard(e.dataTransfer.files[0].name); }
+    });
 
-    <div class="section-label">Readout</div>
-    <div class="insights-panel" id="insights-panel"></div>
+    fileInput.addEventListener('change', (e) => {
+      if(e.target.files.length) { triggerDashboard(e.target.files[0].name); }
+    });
 
-    <div class="section-label">Charts</div>
-    <div class="controls-row">
-      <div class="field">
-        <label for="sel-trend">Trend metric</label>
-        <select id="sel-trend"></select>
-      </div>
-      <div class="field">
-        <label for="sel-group">Grouped by</label>
-        <select id="sel-group"></select>
-      </div>
-      <div class="field">
-        <label for="sel-cat">Breakdown by</label>
-        <select id="sel-cat"></select>
-      </div>
-    </div>
-    <div class="chart-grid">
-      <div class="chart-card">
-        <h3 id="trend-title">Trend over time</h3>
-        <div class="chart-canvas-wrap"><canvas id="trend-chart"></canvas></div>
-      </div>
-      <div class="chart-card">
-        <h3 id="cat-title">Composition</h3>
-        <div class="chart-canvas-wrap"><canvas id="cat-chart"></canvas></div>
-      </div>
-    </div>
+    resetBtn.addEventListener('click', () => {
+      dashboard.style.display = 'none';
+      heroSection.style.display = 'block';
+      fileInput.value = '';
+    });
 
-    <div class="section-label">Column summary</div>
-    <div class="table-wrap">
-      <table id="summary-table">
-        <thead><tr>
-          <th>Column</th><th>Type</th><th>Missing</th><th>Unique</th><th>Mean</th><th>Median</th><th>Min</th><th>Max</th><th>Std dev</th>
-        </tr></thead>
-        <tbody id="summary-tbody"></tbody>
-      </table>
-    </div>
+    function triggerDashboard(filename) {
+      heroSection.style.display = 'none';
+      dashboard.style.display = 'block';
+      document.getElementById('file-name').textContent = filename;
+      loadCharts();
+    }
 
-    <div class="section-label">Row preview</div>
-    <div class="preview-head">
-      <input class="search-input" id="preview-search" placeholder="Filter rows…" style="min-width:240px;">
-      <span class="preview-note" id="preview-note"></span>
-    </div>
-    <div class="table-wrap">
-      <table id="preview-table">
-        <thead id="preview-thead"></thead>
-        <tbody id="preview-tbody"></tbody>
-      </table>
-    </div>
-  </div>
+    function loadCharts() {
+      // Line Chart
+      const ctx1 = document.getElementById('lineChart').getContext('2d');
+      new Chart(ctx1, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [{
+            label: 'Revenue ($)',
+            data: [18000, 24000, 21000, 32000, 29000, 41000],
+            borderColor: '#001F3F',
+            backgroundColor: 'rgba(197, 160, 89, 0.15)',
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
 
-  <footer>Signal · parses entirely client‑side · no data leaves your browser</footer>
-</div>
-
-<script src="script.js"></script>
+      // Doughnut Chart
+      const ctx2 = document.getElementById('doughnutChart').getContext('2d');
+      new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+          labels: ['Software', 'Hardware', 'Services'],
+          datasets: [{
+            data: [50, 30, 20],
+            backgroundColor: ['#001F3F', '#C5A059', '#4B5563']
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+    }
+  </script>
 </body>
 </html>

@@ -78,7 +78,7 @@
     const maxV = Math.max(...values, 0), minV = Math.min(...values, 0);
     const range = (maxV - minV) || 1;
 
-    ctx.strokeStyle = '#2b2f3b'; ctx.lineWidth = 1; ctx.font = '10px "IBM Plex Mono", monospace'; ctx.fillStyle = '#8d919c';
+    ctx.strokeStyle = '#B9CCB1'; ctx.lineWidth = 1; ctx.font = '10px "IBM Plex Mono", monospace'; ctx.fillStyle = '#8A9C8E';
     const gridLines = 4;
     for(let i = 0; i <= gridLines; i++){
       const y = padT + (plotH * i / gridLines);
@@ -113,7 +113,7 @@
     pts.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, 2.6, 0, Math.PI*2); ctx.fill(); });
 
     // x labels (sparse)
-    ctx.fillStyle = '#8d919c'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    ctx.fillStyle = '#8A9C8E'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const maxLabels = Math.min(labels.length, Math.floor(plotW / 60) || 1);
     const stride = Math.max(1, Math.ceil(labels.length / maxLabels));
     labels.forEach((lab, i) => {
@@ -158,7 +158,7 @@
       const lx = 6 + col * colW, ly = legendY + r * 20;
       ctx.fillStyle = colors[i % colors.length];
       ctx.fillRect(lx, ly - 4, 8, 8);
-      ctx.fillStyle = '#8d919c'; ctx.textAlign = 'left';
+      ctx.fillStyle = '#8A9C8E'; ctx.textAlign = 'left';
       const label = String(lab).length > 14 ? String(lab).slice(0,13)+'…' : String(lab);
       ctx.fillText(label, lx + 12, ly);
     });
@@ -442,7 +442,7 @@
         keys = keys.sort((a,b) => buckets[b].reduce((x,y)=>x+y,0) - buckets[a].reduce((x,y)=>x+y,0)).slice(0,12);
       }
       const dataPts = keys.map(k => buckets[k].reduce((a,b)=>a+b,0));
-      drawLineChart(trendCanvas, keys, dataPts, '#e8a33d', 'rgba(232,163,61,0.12)');
+      drawLineChart(trendCanvas, keys, dataPts, '#93691F', 'rgba(147,105,31,0.12)');
     } else {
       setupCanvas(trendCanvas);
     }
@@ -456,7 +456,7 @@
       const labels = top.map(e => String(e[0]));
       const values = top.map(e => e[1]);
       if(rest > 0){ labels.push('Other'); values.push(rest); }
-      const palette = ['#e8a33d','#4fb8af','#e2637a','#8d919c','#c98f2e','#3a8d86','#a84f60','#5a5e69'];
+      const palette = ['#93691F','#2C6A4E','#A23A2C','#8A9C8E','#C99A3F','#4C8A6C','#B96654','#51665A'];
       drawDonutChart(catCanvas, labels, values, palette);
     } else {
       setupCanvas(catCanvas);
