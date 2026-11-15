@@ -2,116 +2,127 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sales Data Analysis & Visualization | Heritage Edition</title>
+  <title>Sales Data Analysis & Visualization</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Google Fonts for Luxury Old Money Look -->
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <!-- Chart.js for Interactive Graphs -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
   <div class="shell">
-    <!-- Top Header -->
     <header class="top">
-      <div class="brand-name">Heritage <span>Analytics</span></div>
-      <div class="status-badge">System Ready</div>
+      <div class="brand">
+        <div class="brand-name">Sales<span>Ledger</span></div>
+      </div>
+      <div class="status-chip">
+        <span class="status-dot on"></span> System Ready
+      </div>
     </header>
 
-    <!-- Hero / Upload Section -->
     <section class="hero" id="hero-section">
-      <h1>Sales Intelligence <em>Refined</em></h1>
-      <p>Upload your sales CSV dataset to instantly generate executive KPIs and visual analytics.</p>
+      <div class="eyebrow">Advanced Data Intelligence</div>
+      <h1 class="headline">Sales & Performance <em>Analyzer</em></h1>
+      <p class="sub">Upload your CSV dataset to instantly generate executive KPIs and visual analytics.</p>
       
-      <div class="dropzone" id="dropzone" onclick="document.getElementById('file-input').click()">
-        <h3>Click to browse or drop your CSV file here</h3>
-        <p style="font-size: 12px; color: #718096; margin-top: 8px;">Supports tabular .csv sales data files</p>
-        <input type="file" id="file-input" accept=".csv">
+      <div class="dropzone-wrap">
+        <div class="dropzone" id="dropzone">
+          <div class="corner tl"></div><div class="corner tr"></div>
+          <div class="corner bl"></div><div class="corner br"></div>
+          <div class="dz-icon">📁</div>
+          <div class="dz-title">Drop your CSV file here or browse</div>
+          <div class="dz-sub">Supports tabular data up to <b>50MB</b></div>
+          <input type="file" id="file-input" accept=".csv">
+        </div>
       </div>
     </section>
 
-    <!-- Dashboard Section (Appears after file upload) -->
     <div id="dashboard">
       <div class="file-bar">
         <span>Active Dataset: <b id="file-name">sales_data.csv</b></span>
-        <button id="reset-btn">Upload New File</button>
+        <button class="reset-btn" id="reset-btn" style="display:inline-block;">Upload New File</button>
       </div>
 
-      <!-- KPI Grid -->
-      <div class="kpi-grid">
-        <div class="card">
-          <span class="ch-tag">Metric 01</span>
-          <div class="kpi-value" id="kpi-revenue">$142,850</div>
-          <div class="kpi-label">Total Revenue</div>
-        </div>
-        <div class="card">
-          <span class="ch-tag">Metric 02</span>
-          <div class="kpi-value" id="kpi-units">1,840</div>
-          <div class="kpi-label">Units Sold</div>
-        </div>
-        <div class="card">
-          <span class="ch-tag">Metric 03</span>
-          <div class="kpi-value" id="kpi-margin">24.2%</div>
-          <div class="kpi-label">Profit Margin</div>
-        </div>
-        <div class="card">
-          <span class="ch-tag">Metric 04</span>
-          <div class="kpi-value" id="kpi-rating">4.9 / 5</div>
-          <div class="kpi-label">Performance Index</div>
-        </div>
-      </div>
+      <div class="dashboard-grid">
+        <nav class="toc">
+          <a href="#kpi-section" class="active"><span class="toc-index">01</span> Overview</a>
+          <a href="#charts-section"><span class="toc-index">02</span> Visualizations</a>
+          <a href="#table-section"><span class="toc-index">03</span> Raw Data</a>
+        </nav>
 
-      <!-- Charts Grid -->
-      <div class="chart-grid">
-        <div class="chart-card">
-          <h3>Monthly Revenue Trend</h3>
-          <div class="chart-canvas-wrap">
-            <canvas id="lineChart"></canvas>
+        <div class="dashboard-main">
+          <div class="section-label" id="kpi-section">Key Performance Indicators</div>
+          <div class="kpi-grid">
+            <div class="card">
+              <span class="ch-tag">METRIC A</span>
+              <div class="kpi-value" id="kpi-1">$128,430</div>
+              <div class="kpi-label">Total Revenue</div>
+            </div>
+            <div class="card">
+              <span class="ch-tag">METRIC B</span>
+              <div class="kpi-value teal" id="kpi-2">1,420</div>
+              <div class="kpi-label">Total Units Sold</div>
+            </div>
+            <div class="card">
+              <span class="ch-tag">METRIC C</span>
+              <div class="kpi-value" id="kpi-3">18.4%</div>
+              <div class="kpi-label">Profit Margin</div>
+            </div>
+            <div class="card">
+              <span class="ch-tag">METRIC D</span>
+              <div class="kpi-value teal" id="kpi-4">4.8 / 5</div>
+              <div class="kpi-label">Rating</div>
+            </div>
+          </div>
+
+          <div class="section-label" id="charts-section">Visual Analytics</div>
+          <div class="chart-grid">
+            <div class="chart-card">
+              <h3>Revenue Trend Analysis</h3>
+              <div class="chart-canvas-wrap"><canvas id="lineChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+              <h3>Category Distribution</h3>
+              <div class="chart-canvas-wrap"><canvas id="doughnutChart"></canvas></div>
+            </div>
+          </div>
+
+          <div class="section-label" id="table-section">Dataset Preview</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Transaction ID</th>
+                  <th>Product Category</th>
+                  <th>Units</th>
+                  <th>Revenue ($)</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="table-body">
+                <tr>
+                  <td>TXN-9021</td>
+                  <td>Enterprise License</td>
+                  <td>12</td>
+                  <td>$4,800</td>
+                  <td>2026-08-12</td>
+                </tr>
+                <tr>
+                  <td>TXN-9022</td>
+                  <td>Cloud Storage Tier</td>
+                  <td>45</td>
+                  <td>$1,350</td>
+                  <td>2026-08-14</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <div class="chart-card">
-          <h3>Category Distribution</h3>
-          <div class="chart-canvas-wrap">
-            <canvas id="doughnutChart"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <!-- Table Preview -->
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Transaction ID</th>
-              <th>Product Category</th>
-              <th>Units</th>
-              <th>Revenue</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody id="table-body">
-            <tr>
-              <td>TXN-1001</td>
-              <td>Enterprise Software</td>
-              <td>15</td>
-              <td>$5,250</td>
-              <td>2026-08-01</td>
-            </tr>
-            <tr>
-              <td>TXN-1002</td>
-              <td>Cloud Hardware</td>
-              <td>42</td>
-              <td>$12,600</td>
-              <td>2026-08-03</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </div>
+
+    <footer>LedgerAnalytics Engine &copy; 2026. Built with Precision.</footer>
   </div>
 
-  <!-- JavaScript Logic -->
   <script>
     const dropzone = document.getElementById('dropzone');
     const fileInput = document.getElementById('file-input');
@@ -119,14 +130,17 @@
     const dashboard = document.getElementById('dashboard');
     const resetBtn = document.getElementById('reset-btn');
 
-    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); });
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('drag'); });
+    dropzone.addEventListener('dragleave', () => { dropzone.classList.remove('drag'); });
     dropzone.addEventListener('drop', (e) => {
       e.preventDefault();
-      if(e.dataTransfer.files.length) { triggerDashboard(e.dataTransfer.files[0].name); }
+      dropzone.classList.remove('drag');
+      if(e.dataTransfer.files.length) { showDashboard(e.dataTransfer.files[0].name); }
     });
 
     fileInput.addEventListener('change', (e) => {
-      if(e.target.files.length) { triggerDashboard(e.target.files[0].name); }
+      if(e.target.files.length) { showDashboard(e.target.files[0].name); }
     });
 
     resetBtn.addEventListener('click', () => {
@@ -135,25 +149,24 @@
       fileInput.value = '';
     });
 
-    function triggerDashboard(filename) {
+    function showDashboard(filename) {
       heroSection.style.display = 'none';
       dashboard.style.display = 'block';
       document.getElementById('file-name').textContent = filename;
-      loadCharts();
+      renderCharts();
     }
 
-    function loadCharts() {
-      // Line Chart
-      const ctx1 = document.getElementById('lineChart').getContext('2d');
-      new Chart(ctx1, {
+    function renderCharts() {
+      const ctxLine = document.getElementById('lineChart').getContext('2d');
+      new Chart(ctxLine, {
         type: 'line',
         data: {
           labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
           datasets: [{
             label: 'Revenue ($)',
-            data: [18000, 24000, 21000, 32000, 29000, 41000],
-            borderColor: '#001F3F',
-            backgroundColor: 'rgba(197, 160, 89, 0.15)',
+            data: [12000, 19000, 15000, 25000, 22000, 31000],
+            borderColor: '#93691F',
+            backgroundColor: 'rgba(147,105,31,0.08)',
             fill: true,
             tension: 0.3
           }]
@@ -161,15 +174,14 @@
         options: { responsive: true, maintainAspectRatio: false }
       });
 
-      // Doughnut Chart
-      const ctx2 = document.getElementById('doughnutChart').getContext('2d');
-      new Chart(ctx2, {
+      const ctxDonut = document.getElementById('doughnutChart').getContext('2d');
+      new Chart(ctxDonut, {
         type: 'doughnut',
         data: {
           labels: ['Software', 'Hardware', 'Services'],
           datasets: [{
-            data: [50, 30, 20],
-            backgroundColor: ['#001F3F', '#C5A059', '#4B5563']
+            data: [55, 30, 15],
+            backgroundColor: ['#2C6A4E', '#93691F', '#A23A2C']
           }]
         },
         options: { responsive: true, maintainAspectRatio: false }
